@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ title }}</title>
+</head>
+<body>
+    <h1>Sensor Test Report</h1>
+    {% for sensor in sensors %}
+        <p>Sensor ID: {{ ip_address_sensor }}</p>
+        {% for category, tests in sensor.results.items() %}
+            <h2>{{ category }}</h2>
+            <ul>
+                {% for test in tests %}
+                    <li><b>{{ test.test_name }}</b>: {{ test.output }}</li>
+                {% endfor %}
+            </ul>
+        {% endfor %}
+    {% endfor %}
+</body>
+</html>

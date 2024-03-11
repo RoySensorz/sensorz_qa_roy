@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+</body>
+</html><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sensor Report</title>
+</head>
+<body>
+    <h1>Sensor Test Report</h1>
+    {% for sensor in sensors %}
+    <div>
+        <h2>Sensor ID: {{ sensor.sensor_id }}</h2>
+        <ul>
+        {% for command, output in sensor.results.items() %}
+            <li><strong>{{ command }}:</strong> {{ output }}</li>
+        {% endfor %}
+        </ul>
+    </div>
+    {% endfor %}
+</body>
+</html>
