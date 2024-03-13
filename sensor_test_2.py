@@ -2,11 +2,11 @@ import json
 import logging
 import os
 import socket
-from datetime import datetime
 import paramiko
 import yaml
 from dotenv import load_dotenv
 from jinja2 import Environment, FileSystemLoader
+from datetime import datetime
 
 # Initialize logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -97,12 +97,8 @@ def execute_tests(sensor_details, tests):
             sensor_result["results"][category] = category_results
         test_results.append(sensor_result)
         logging.info(f"Tests completed for sensor: {hostname_sensor} {ip_address_sensor}")
-        idx = sensor_details.index(sensor)
-        if idx < len(sensor_details) - 1:
-            next_sensor = sensor_details[idx + 1]['hostname']
-            logging.info(f"Moving on to next sensor: {next_sensor}")
         print(f"Tests executed for sensor {hostname_sensor} {ip_address_sensor}.")
-        return test_results
+    return test_results
 
 
 # Function to generate an HTML report
@@ -119,18 +115,34 @@ def generate_html_report(test_results, title, template_dir='templates', template
     return report_content
 
 
-# Main function
+def generate_report(report_content, report_filename=None):
+    report_directory = 'reports'
+    if not os.path.exists(report_directory):
+        os.makedirs(report_directory)
+
+    # rest of your code...
+
+    report_filepath = os.path.join(report_directory, report_filename)
+
+    with open(report_filepath, "w") as report_file:
+        report_file.write(report_content)
+
+    return report_filepath
+
+
 def main(tests_file_path=r'C:\Users\Roy Avrahami\PycharmProjects\sensorz_qa_roy\tests\test_definitions.json'):
     print("Starting test execution...")
     sensor_details = load_sensor_details(sensors_file_path)
     tests = load_tests(tests_file_path)
     test_results = execute_tests(sensor_details, tests)
+
     title = 'Sensor Test Report - ' + datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     report = generate_html_report(test_results, title)
-    report_file_path = os.path.join(reports_directory, "sensor_test_report.html")
-    with open(report_file_path, 'w') as file:
-        file.write(report)
-    logging.info(f"Report saved to {report_file_path}")
+
+    # generate the report and get the file path
+    report_filepath = generate_report(report)
+
+    logging.info(f"Report saved to {report_filepath}")
 
 
 if __name__ == "__main__": main()
