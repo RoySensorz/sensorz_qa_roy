@@ -1,0 +1,34 @@
+{
+    "Performance": [
+        {"name": "CPU Load Test",
+         "command": "stress --cpu 8 --timeout 60s && grep 'CPU Load' /var/log/sensorz/utils_health.log"},
+        {"name": "Memory Usage Test",
+         "command": "stress --vm 2 --vm-bytes 128M --timeout 60s && grep 'Memory Usage' /var/log/sensorz/utils_health.log"},
+        {"name": "Disk Write Performance Test",
+         "command": "dd if=/dev/zero of=/tmp/test1.img bs=1G count=1 oflag=dsync ssh sensorz@(ip_address_sensor)"},
+        {"name": "Network Throughput Test",
+         "command": "iperf3 -c 10.8.0.1 -p 12321 -t 10; cat /var/log/sensorz/sensorz_mon.log | grep 'Network Throughput'"},
+        {"name": "Data Processing Rate Test",
+         "command": "cat /var/log/sensorz/rf_scanner.log | grep 'Data Processed'"}
+    ],
+    "Stability": [
+        {"name": "Temperature Stability Test",
+         "command": "cat /var/log/sensorz/utils_health.log | grep 'Temperature'"}
+    ],
+    "Network": [
+        {"name": "Internal Network Latency Test",
+         "command": "ping -c 10 10.8.0.1 && cat /var/log/sensorz/network.log | grep 'Latency'"},
+        {"name": "External Network Connectivity Test",
+         "command": "ssh sensorz@(ip_address_sensor) -C 'ping -c 10 8.8.8.8'"},
+        {"name": "DNS Resolution Test",
+         "command": "ssh sensorz@(ip_address_sensor) -C 'dig example.com'"},
+        {"name": "Network Upload Speed Test",
+         "command": "ssh sensorz@(ip_address_sensor) -C 'iperf3 -c 10.8.0.1 -p 12321 -t 10 -R'"},
+        {"name": "Network Download Speed Test",
+         "command": "ssh sensorz@(ip_address_sensor) -C 'iperf3 -c 10.8.0.1 -p 12321 -t 30'"},
+        {"name": "VPN Connectivity Test",
+         "command": "ssh sensorz@(ip_address_sensor) -C 'curl -I https://secure.resource.via.vpn'"},
+        {"name": "Network Packet Loss Test",
+         "command": "ssh sensorz@(ip_address_sensor) -C 'mtr -rw 8.8.8.8'"}
+    ]
+}

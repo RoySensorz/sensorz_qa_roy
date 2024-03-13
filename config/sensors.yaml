@@ -1,0 +1,24 @@
+- hostname: SENS-WA10-398A-0059
+  ip_address_sensor: "10.8.0.68"
+  username_sensorz: "sensorz"
+  password_sensorz: "sensor1234"
+
+- hostname: GLOB-WA10-398A-0089
+  ip_address_sensor: "10.8.0.98"
+  username_sensorz: "sensorz"
+  password_sensorz: "sensor1234"
+
+- hostname: GLOB-WA10-398A-0114
+  ip_address_sensor: "10.8.0.123"
+  username_sensorz: "sensorz"
+  password_sensorz: "sensor1234"
+
+- hostname: SENS-WA10-398A-0204
+  ip_address_sensor: "10.8.0.213"
+  username_sensorz: "sensorz"
+  password_sensorz: "sensor1234"
+
+- hostname: SENS-WA10-398A-0214
+  ip_address_sensor: "10.8.0.223"
+  username_sensorz: "sensorz"
+  password_sensorz: "sensor1234"
