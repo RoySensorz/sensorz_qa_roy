@@ -1,0 +1,21 @@
+
+Processing environment: staging
+Version in Chart.yaml: 0.1.0
+
+Processing environment: singtel
+Version in Chart.yaml: 2.1.0
+
+Processing environment: drc
+Version in Chart.yaml: 0.1.0
+
+Processing environment: qa
+Version in Chart.yaml: 0.1.0
+
+Processing environment: develop
+Version in Chart.yaml: 0.1.0
+
+Processing environment: poc
+Version in Chart.yaml: 0.1.0
+
+Processing environment: globe
+Version in Chart.yaml: 0.2.0
