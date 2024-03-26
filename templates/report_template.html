@@ -4,26 +4,100 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ title }}</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 5px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        .preformatted {
+            white-space: pre-wrap;
+        }
+    </style>
 </head>
 <body>
     <h1>{{ title }}</h1>
     <p>Generated on: {{ date_time }}</p>
     <hr>
     {% for result in test_results %}
-        <h2>Sensor IP: {{ result.ip_address }}</h2>
-        {% for category, tests in result.results.items() %}
-            <h3>{{ category }} Tests</h3>
-            <ul>
-                {% for test in tests %}
-                    <li>{{ test.test_name }}: {{ test.status }}</li>
-                    {% if test.output %}
-                    <ul>
-                        <li>Output: {{ test.output }}</li>
-                    </ul>
+    <h2>Sensor IP: {{ result.ip_address }}</h2>
+    <p>Hostname: {{ result.hostname }}</p>
+    {% for category, tests in result.results.items() %}
+    <h3>{{ category }} Tests</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Test Name</th>
+                <th>Status</th>
+                <th>Output</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for test in tests %}
+            <tr class="{{ test.status.lower() }}">
+                <td>{{ test.test_name }}</td>
+                <td>{{ test.status }}</td>
+                <td>
+                    {% if test.test_name == "Temperature Stability Test" %}
+                    <table>
+                        <tr>
+                            {% if test.output_headers %}
+                            {% for header in test.output_headers %}
+                            <th>{{ header }}</th>
+                            {% endfor %}
+                            {% else %}
+                            <th>Timestamp</th>
+                            <th>CPU Usage (%) (Banana-PI)</th>
+                            <th>Virtual Mem Usage (Banana-PI)</th>
+                            <th>RAM Usage (Banana-PI)</th>
+                            <th>Net Rate (Banana-PI)</th>
+                            <th>Net Rate2 (Banana-PI)</th>
+                            <th>Disk Usage (Banana-PI)</th>
+                            <th>SDR CPU Usage (Pluto+ SDR Zynq)</th>
+                            <th>SDR RAM Usage (Pluto+ SDR Zynq)</th>
+                            <th>AD Temperature (RF chip)</th>
+                            <th>Zynq Temperature (Pluto+ SDR Zynq)</th>
+                            <th>SBC Available CPUs (Banana-PI)</th>
+                            <th>SBC CPU Temperature (Banana-PI)</th>
+                            <th>SDR Inf Value Counter (Pluto+ SDR Zynq)</th>
+                            <th>SDR GD Reset Counter (Pluto+ SDR Zynq)</th>
+                            <th>SDR IIOD Reset Counter (Pluto+ SDR Zynq)</th>
+                            <th>SDR ND RESET Counter (SDR Zynq)</th>
+                            {% endif %}
+                        </tr>
+                        {% for line in test.output.split('\n') %}
+                        <tr>
+                            {% for value in line.split(',') %}
+                            <td>{{ value }}</td>
+                            {% endfor %}
+                        </tr>
+                        {% endfor %}
+                    </table>
+                    {% else %}
+                    <pre class="preformatted">{{ test.output | safe }}</pre>
+                    {% if test.log_output %}
+                    <h4>Logs:</h4>
+                    <pre class="preformatted">{{ test.log_output | safe }}</pre>
                     {% endif %}
-                {% endfor %}
-            </ul>
-        {% endfor %}
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endfor %}
     {% endfor %}
 </body>
 </html>

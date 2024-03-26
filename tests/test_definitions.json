@@ -1,34 +1,100 @@
 {
+    "Functional": [
+        {
+            "name": "Sensor Daemon Restart",
+            "command": "sudo systemctl restart sensord.service",
+            "description": "Tests if the Sensor Daemon can successfully restart without errors, ensuring its reliability and stability.",
+            "log_check": "sudo journalctl -u sensord.service --since '1 minute ago' | grep -E 'Stopping Sensor Daemon|Started Sensor Daemon'"
+        },
+        {
+            "name": "Garbage Data Detection Service Restart",
+            "command": "sudo systemctl restart sensorz_garbage_detector.service",
+            "description": "Verifies that the Garbage Data Detection Service can restart and continue to filter garbage data accurately.",
+            "log_check": "sudo journalctl -u sensorz_garbage_detector.service --since '1 minute ago' | grep -E 'Stopping Service analyze measurements|Stopped Service analyze measurements to detect garbage data|Started Service analyze measurements to detect garbage data'"
+        },
+        {
+            "name": "Sensor Health Monitoring Service Restart",
+            "command": "sudo systemctl restart sensorz_health.service",
+            "description": "Checks the resilience of the Sensor Health Monitoring Service by restarting it and ensuring it continues to function properly.",
+            "log_check": "sudo journalctl -u sensorz_health.service --since '1 minute ago' | grep -E 'Stopping Service for monitoring sensor health|Stopped Service for monitoring sensor health|Started Service for monitoring sensor health'"
+        },
+        {
+            "name": "Heartbeat Service Restart",
+            "command": "sudo systemctl restart sensorz_heartbit.service",
+            "description": "Tests the continuity and reliability of the Heartbeat Service by restarting and verifying its operation.",
+            "log_check": "sudo journalctl -u sensorz_heartbit.service --since '1 minute ago' | grep -E 'Stopped Service send heartbits to connection monitor service|Started Service send heartbits to connection monitor service'"
+        },
+        {
+            "name": "LED Control Service Restart",
+            "command": "sudo systemctl restart sensorz_led_control.service",
+            "description": "Ensures that the LED Control Service can be restarted without affecting its ability to control sensor LED indicators.",
+            "log_check": "sudo journalctl -u sensorz_led_control.service --since '1 minute ago' | grep -E 'Stopping Service provide contol on LED|Stopped Service provide contol on LED|Started Service provide contol on LED'"
+        },
+        {
+            "name": "RF Scanner Service Restart",
+            "command": "sudo systemctl restart sensorz_rf_scanner.service",
+            "description": "Tests the RF Scanner Service's ability to restart and maintain accurate RF scanning operations.",
+            "log_check": "sudo journalctl -u sensorz_rf_scanner.service --since '1 minute ago' | grep -E 'Stopping Service for controlling the RF Scanner|Stopped Service for controlling the RF Scanner|Started Service for controlling the RF Scanner'"
+        },
+        {
+            "name": "GPS Daemon Restart",
+            "command": "sudo systemctl restart gpsd.service",
+            "description": "Evaluates the GPS Daemon's capability to restart and continue providing precise GPS data.",
+            "log_check": "sudo journalctl -u gpsd.service --since '2 minute ago'"
+        },
+        {
+            "name": "Network Manager Restart",
+            "command": "sudo systemctl restart NetworkManager.service",
+            "description": "Assesses Network Manager's resilience by restarting it and checking for stable network connectivity post-restart.",
+            "log_check": "sudo journalctl -u NetworkManager.service --since '1 minute ago' | grep -E 'Stopping Network Manager|Stopped Network Manager|Starting Network Manager|manager: startup complete'"
+        },
+        {
+            "name": "Docker Service Restart",
+            "command": "sudo systemctl restart docker.service",
+            "description": "Tests Docker's ability to manage container states effectively through a service restart, ensuring container runtime stability.",
+            "log_check": "sudo journalctl -u docker.service --since '1 minute ago' | grep -E 'Stopping Docker Application Container Engine|Stopped Docker Application Container Engine|Starting Docker Application Container Engine'"
+        }
+    ],
     "Performance": [
-        {"name": "CPU Load Test",
-         "command": "stress --cpu 8 --timeout 60s && grep 'CPU Load' /var/log/sensorz/utils_health.log"},
-        {"name": "Memory Usage Test",
-         "command": "stress --vm 2 --vm-bytes 128M --timeout 60s && grep 'Memory Usage' /var/log/sensorz/utils_health.log"},
-        {"name": "Disk Write Performance Test",
-         "command": "dd if=/dev/zero of=/tmp/test1.img bs=1G count=1 oflag=dsync ssh sensorz@(ip_address_sensor)"},
-        {"name": "Network Throughput Test",
-         "command": "iperf3 -c 10.8.0.1 -p 12321 -t 10; cat /var/log/sensorz/sensorz_mon.log | grep 'Network Throughput'"},
-        {"name": "Data Processing Rate Test",
-         "command": "cat /var/log/sensorz/rf_scanner.log | grep 'Data Processed'"}
+        {
+            "name": "CPU Load Test",
+            "command": "stress --cpu 8 --timeout 500s"
+        },
+        {
+            "name": "Memory Usage Test",
+            "command": "stress --vm 2 --vm-bytes 128M --timeout 500s"
+        },
+        {
+            "name": "Network Throughput Test",
+            "command": "iperf3 -c 10.8.0.1 -p 12321 -t 10; cat /var/log/sensorz/sensorz_mon.log"
+        }
     ],
     "Stability": [
-        {"name": "Temperature Stability Test",
-         "command": "cat /var/log/sensorz/utils_health.log | grep 'Temperature'"}
+        {
+            "name": "Temperature Stability Test",
+            "command": "tail /var/log/sensorz/HealthMonitoring.log"
+        }
     ],
     "Network": [
-        {"name": "Internal Network Latency Test",
-         "command": "ping -c 10 10.8.0.1 && cat /var/log/sensorz/network.log | grep 'Latency'"},
-        {"name": "External Network Connectivity Test",
-         "command": "ssh sensorz@(ip_address_sensor) -C 'ping -c 10 8.8.8.8'"},
-        {"name": "DNS Resolution Test",
-         "command": "ssh sensorz@(ip_address_sensor) -C 'dig example.com'"},
-        {"name": "Network Upload Speed Test",
-         "command": "ssh sensorz@(ip_address_sensor) -C 'iperf3 -c 10.8.0.1 -p 12321 -t 10 -R'"},
-        {"name": "Network Download Speed Test",
-         "command": "ssh sensorz@(ip_address_sensor) -C 'iperf3 -c 10.8.0.1 -p 12321 -t 30'"},
-        {"name": "VPN Connectivity Test",
-         "command": "ssh sensorz@(ip_address_sensor) -C 'curl -I https://secure.resource.via.vpn'"},
-        {"name": "Network Packet Loss Test",
-         "command": "ssh sensorz@(ip_address_sensor) -C 'mtr -rw 8.8.8.8'"}
+        {
+            "name": "External Network Connectivity Test",
+            "command": "ping -c 10 8.8.8.8"
+        },
+        {
+            "name": "DNS Resolution Test",
+            "command": "dig example.com"
+        },
+        {
+            "name": "Network Upload Speed Test",
+            "command": "iperf3 -c 10.8.0.1 -p 12321 -t 10 -R"
+        },
+        {
+            "name": "Network Download Speed Test",
+            "command": "iperf3 -c 10.8.0.1 -p 12321 -t 30"
+        },
+        {
+            "name": "Network Packet Loss Test",
+            "command": "mtr -rw 8.8.8.8"
+        }
     ]
 }

@@ -1,24 +1,34 @@
-- hostname: SENS-WA10-398A-0059
+- hostname: SENS-WA10-398A-0059 (PoE, OpenVPN, QA Lab)
   ip_address_sensor: "10.8.0.68"
   username_sensorz: "sensorz"
   password_sensorz: "sensor1234"
 
-- hostname: GLOB-WA10-398A-0089
+- hostname: GLOB-WA10-398A-0089 (New PS, OpenVPN, Cell dongle, Office)
   ip_address_sensor: "10.8.0.98"
   username_sensorz: "sensorz"
   password_sensorz: "sensor1234"
 
-- hostname: GLOB-WA10-398A-0114
+- hostname: GLOB-WA10-398A-0114 (PoE, OpenVPN, QA Lab)
   ip_address_sensor: "10.8.0.123"
   username_sensorz: "sensorz"
   password_sensorz: "sensor1234"
 
-- hostname: SENS-WA10-398A-0204
-  ip_address_sensor: "10.8.0.213"
+#- hostname: SENS-WA10-398A-0204 (PoE, OpenVPN, Cell dongle, Office)
+#  ip_address_sensor: "10.8.0.213"
+#  username_sensorz: "sensorz"
+#  password_sensorz: "sensor1234"
+
+- hostname: SENS-WA10-398A-0214 (New PS, OpenVPN, Ethernet dongle, Sun Terrace - Office)
+  ip_address_sensor: "10.8.0.223"
   username_sensorz: "sensorz"
   password_sensorz: "sensor1234"
 
-- hostname: SENS-WA10-398A-0214
-  ip_address_sensor: "10.8.0.223"
+- hostname: GLOB-WA10-398A-0067 (New PS, OpenVPN, Cell dongle, Office)
+  ip_address_sensor: "10.8.0.76"
+  username_sensorz: "sensorz"
+  password_sensorz: "sensor1234"
+
+- hostname: SENS-WA10-398A-0154 (New PS, OpenVPN, Cell dongle, Office)
+  ip_address_sensor: "10.8.0.163"
   username_sensorz: "sensorz"
   password_sensorz: "sensor1234"
