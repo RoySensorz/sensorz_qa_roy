@@ -11,7 +11,7 @@ from jinja2 import Environment, FileSystemLoader
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
-load_dotenv(dotenv_path=r'/config/poe_project.env')
+load_dotenv(dotenv_path=r'config/.env')
 
 sensors_file_path = os.getenv('SENSOR_DETAILS_PATH')
 reports_directory = os.getenv('REPORTS_DIRECTORY')
@@ -137,7 +137,7 @@ def generate_report(report_content, report_filename=None):
     return report_filepath
 
 
-def main(tests_file_path=r'C:\Users\Roy Avrahami\PycharmProjects\sensorz_qa_roy\tests\test_definitions.json'):
+def main(tests_file_path=r'C:\Users\Roy Avrahami\PycharmProjects\sensorz_qa_roy\tests\poe_project_test_definitions.json'):
     print("Starting test execution...")
     sensor_details = load_sensor_details(sensors_file_path)
     tests = load_tests(tests_file_path)
