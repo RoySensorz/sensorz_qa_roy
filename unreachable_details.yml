@@ -1,0 +1,27 @@
+unreachable_sensors:
+- hostname: SENS-WA10-398A-0156 (Terrace, Connected with PoE, Connected with cell
+    dongle)
+  original_ip: 10.8.0.165
+  reason: Not pingable
+  updated_ip: 10.3.0.165
+- hostname: SENS-WA10-398A-0110 (QA Lab / Sensorz, Connected with PS, Connected via
+    OpenVPN, Connected to Ethernet dongle)
+  original_ip: 10.8.0.119
+  reason: Not pingable
+  updated_ip: 10.3.0.119
+- hostname: GLOB-WA10-398A-0089 (QA Lab / Sensorz, Connected with cell dongle, Connected
+    via OpenVPN, Connected to New PS, Connected to Sensorz, Part of the PoE testing,
+    Sensor B in Uplink/Downlink testing, i will take it home)
+  original_ip: 10.8.0.98
+  reason: Not pingable
+  updated_ip: 10.3.0.98
+- hostname: GLOB-WA10-398A-0114 (QA Lab / Sensorz, Connected with PoE, Connected via
+    OpenVPN, Connected to Sensorz, Part of the PoE testing, BananaPi stuck 04/04/24)
+  original_ip: 10.8.0.123
+  reason: Not pingable
+  updated_ip: 10.3.0.123
+- hostname: SENS-WA10-398A-0209 (Terrace, Connected with PoE, Connected with cell
+    dongle)
+  original_ip: 10.8.0.218
+  reason: Not pingable
+  updated_ip: 10.3.0.218
